@@ -15,7 +15,7 @@
 #### 环境准备
 - 准备两台可以互相连通的kali主机kali2，kali3
 
- ![](./img/kali.PNG)
+ ![](./img/kali.png)
 
 #### Apache内置安全设施
 
@@ -28,9 +28,9 @@
     apt search apache | grep security
     ```
 
-    ![](./img/ap1.PNG)
+    ![](./img/ap1.png)
 
-    ![](./img/ap2.PNG)
+    ![](./img/ap2.png)
 
 - 安装相关模块
 
@@ -38,11 +38,11 @@
     apt update && apt-get install libapache2-mod-security2
     ```
 
-    ![](./img/ap3.PNG)
+    ![](./img/ap3.png)
 
 - 查看刚刚下载的与security相关的包
 
-    ![](./img/ap4.PNG)
+    ![](./img/ap4.png)
 
 - 配置规则
 
@@ -78,12 +78,12 @@
     systemctl restart apache2
     ```
 
-    ![](./img/ap5.PNG)
-    ![](./img/ap6.PNG)
+    ![](./img/ap5.png)
+    ![](./img/ap6.png)
 
 - 将配置生效`systemctl restart apache2`
-    ![](./img/ap7.PNG)
-    ![](./img/ap.PNG)
+    ![](./img/ap7.png)
+    ![](./img/ap.png)
 
 - 让攻击者主机对靶机进行简单的xss攻击（使用curl命令），发现被拒绝
 
@@ -91,7 +91,7 @@
     curl 'http://172.16.111.119/?q="><script>alert(./1)</script>'
     ```
 
-    ![](./img/ap8.PNG)
+    ![](./img/ap8.png)
 
 - 查看日志文件，会发现该行为被记录了下来
 
@@ -99,7 +99,7 @@
     tail error.log
     ```
 
-    ![](./img/ap9.PNG)
+    ![](./img/ap9.png)
 
 
 - 说明规则设置生效，可预防owasp中的一些攻击并且能通过日志记录下来，web应用安全得到了加固
@@ -111,7 +111,7 @@
 ### ssh
 - 尝试进行ssh链接失败
 
- ![](./img/fa.PNG)
+ ![](./img/fa.png)
 
 
 - 修改Victim的ssh配置
@@ -130,11 +130,11 @@
     systemctl restart ssh
     ```
 
-    ![](./img/fa1.PNG)
+    ![](./img/fa1.png)
 
 - 攻击者修改配置后能够正常ssh连接
 
-    ![](./img/fa2.PNG)
+    ![](./img/fa2.png)
 
 ### 爆破ssh
 
@@ -148,7 +148,7 @@
     hydra -l root -P /usr/share/wordlists/rockyou.txt -v 172.16.111.141 ssh
     ```
 - 弱指令爆破成功
-     ![](./img/fa3.PNG)
+     ![](./img/fa3.png)
 
 
 **fail2ban**
@@ -171,7 +171,7 @@
     ls /etc/fail2ban/filter.d/
     ```
 
-    ![](./img/fa4.PNG)
+    ![](./img/fa4.png)
 
 - 可对 jail.conf fail2ban.conf 等配置文件中的配置项进行自定义配置（需要注意格式）
 
@@ -189,9 +189,9 @@
     gedit /etc/fail2ban/jail.local
     ```
 
-    ![](./img/fa5.PNG)
+    ![](./img/fa5.png)
 
-    ![](./img/fa6.PNG)
+    ![](./img/fa6.png)
 
 - 启用sshd jail后重启服务，暂时没有发现被禁止的ip
 
@@ -206,15 +206,15 @@
     fail2ban-client status sshd
     ```
 
-    ![](./img/fa7.PNG)
+    ![](./img/fa7.png)
 
 - 多次调试后发现了被禁止的攻击者ip
 
-    ![](./img/fa8.PNG)
+    ![](./img/fa8.png)
 
 - 在防火墙中我们也可以看到被禁止的ip，说明该禁止的原理就是通过设置防火墙规则进行拒绝
 
-    ![](./img/fa9.PNG)
+    ![](./img/fa9.png)
 
 
 -   查看日志
@@ -223,7 +223,7 @@
     gedit /var/log/fail2ban.log
     ```
 
-    ![](./img/fa10.PNG)
+    ![](./img/fa10.png)
 
 - 恢复实验环境
 
@@ -232,7 +232,7 @@
     fail2ban-client unban all
     ```
 
-    ![](./img/fa11.PNG)
+    ![](./img/fa11.png)
 
 #### 参考资料  
 - [2018-NS-Public-jckling/ns-0x10/chap0x10实验.md](./https://github.com/CUCCS/2018-NS-Public-jckling/blob/ns-0x10/ns-0x10/chap0x10%E5%AE%9E%E9%AA%8C.md)
